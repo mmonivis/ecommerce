@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Home from './containers/Home';
 
-import Navbar from './Navbar';
+import App from './App';
 
 // Go get the createStore method from the redux module
 import { createStore } from 'redux';
@@ -19,10 +19,7 @@ const theStore = createStore(reducers);
 // ReactDOM.render takes 2 args: 1. What, 2. Where
 ReactDOM.render(
 	<Provider store={theStore}>
-		<div>
-			<Navbar />
-			<Home />
-		</div>
+		<App />
 	</Provider>,
 	document.getElementById('root')
 );
