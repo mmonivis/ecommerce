@@ -1,0 +1,102 @@
+.float-right{
+  float: right;
+}
+
+.navbar-header a{
+  text-align: center;
+  margin-right: 10px;
+}
+
+.dropdown{
+  position: relative;
+}
+
+.dropdown .dropdown-links{
+  display: none;
+}
+
+.dropdown:hover .dropdown-links{
+  display: block;
+}
+
+.dropdown-links a{
+  display: block;
+  position: absolute;
+  left: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #999;
+  width: 150px;
+  text-align: left;
+  color: #777;
+}
+
+.dropdown-links a:nth-child(1){
+  top: 40px;
+}
+
+.dropdown-links a:nth-child(2){
+  top: 60px;
+}
+
+.dropdown-links a:nth-child(3){
+  top: 80px;
+}
+
+.dropdown-links a:nth-child(4){
+  top: 100px;
+}
+
+.dropdown-links a:nth-child(5){
+  top: 120px;
+}
+
+.dropdown-links a:nth-child(6){
+  top: 140px;
+}
+
+.dropdown-links a:nth-child(7){
+  top: 160px;
+}
+
+.dropdown-links a:hover{
+  color: black;
+}
+
+@media only screen and (max-width: 960px){
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    /* since 3.1.0 */
+    .navbar-collapse.collapse.in { 
+        display: block!important;
+    }
+    .collapsing {
+        overflow: hidden!important;
+    }
+}
