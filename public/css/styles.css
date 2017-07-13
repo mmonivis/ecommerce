@@ -146,3 +146,8 @@
 .home-header {
   text-align: center;
 }
+
+/* line 17, ../../compass/sass/styles.scss */
+.register-wrapper {
+  margin-top: 100px;
+}
