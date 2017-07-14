@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Students from './Students';
 import Home from './containers/Home';
-import Navbar from './components/Navbar';
+import Navbar from './containers/Navbar';
 import Register from './containers/Register';
+import Login from './containers/Login';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
       		<div className="container main">
       			<Route exact path="/" component={Home} />
       			<Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
       		</div>
       	</div>
       </Router>
