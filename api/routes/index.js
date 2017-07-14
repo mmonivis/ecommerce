@@ -38,10 +38,11 @@ router.get('/productlines/get', (req,res)=>{
 
 router.post('/register', (req,res)=>{
 	const name = req.body.name;
+	const username = req.body.username;
 	const email = req.body.email;
 	const accountType = 'customer';
 	const password = bcrypt.hashSync(req.body.password);
-	// console.log(password);
+	console.log(req.body);
 	const city = req.body.city;
 	const state = req.body.state;
 	const salesRep = req.body.salesRep;
@@ -53,31 +54,41 @@ router.post('/register', (req,res)=>{
 	// Get the ID created by that insert
 	// THEN, insert the user into Users.
 
-	// Customers insert query
-	var insertIntoCust = "INSERT INTO customers (customerName,city,state,salesRepEmployeeNumber,creditLimit) VALUES (?,?,?,?,?)";
-	// Run the query (for now, set the salesRep to 1337)
-	connection.query(insertIntoCust,[name,city,state,1337,creditLimit],(error, results)=>{
-		// Get the ID that was used in the customers insert
-		const newID = results.insertId
-		// Get the current timestamp
-		var currTimeStamp = Date.now() / 1000;
-		// Set up a token for this user. We will give this back to react
-		var token = randToken.uid(40);
-		// Users insert query. Use error2 and results2 because are alredy used results and error
-		var insertQuery = "INSERT INTO users (uid,type,password,created,token) VALUES (?,?,?,?,?)";
-		// Run the query
-		connection.query(insertQuery,[newID,accountType,password,currTimeStamp,token],(error2, results2)=>{
-			if(error2){
-				res.json({
-					msg: error2
+	var checkUsernameQuery = "SELECT * FROM users WHERE username = ?";
+	connection.query(checkUsernameQuery,[username],(error,results)=>{
+		if(results.length == 0){
+		// Customers insert query
+			var insertIntoCust = "INSERT INTO customers (customerName,city,state,salesRepEmployeeNumber,creditLimit) VALUES (?,?,?,?,?)";
+			// Run the query (for now, set the salesRep to 1337)
+			connection.query(insertIntoCust,[name,city,state,1337,creditLimit],(error, results)=>{
+				// Get the ID that was used in the customers insert
+				const newID = results.insertId
+				// Get the current timestamp
+				var currTimeStamp = Date.now() / 1000;
+				// Set up a token for this user. We will give this back to react
+				var token = randToken.uid(40);
+				// Users insert query. Use error2 and results2 because are alredy used results and error
+				var insertQuery = "INSERT INTO users (uid,type,username,password,created,token) VALUES (?,?,?,?,?,?)";
+				// Run the query
+				connection.query(insertQuery,[newID,accountType,username,password,currTimeStamp,token],(error2, results2)=>{
+					if(error2){
+						res.json({
+							msg: error2
+						});
+					}else{
+						res.json({
+							msg: "userInserted",
+							token: token
+						})
+					}
 				});
-			}else{
-				res.json({
-					msg: "userInserted",
-					token: token
-				})
-			}
-		});
+			});
+		}else{
+			console.log("Username already exists")
+			res.json({
+				msg: "userAlreadyExists"
+			});
+		}
 	});
 })
 

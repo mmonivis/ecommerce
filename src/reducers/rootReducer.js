@@ -7,13 +7,16 @@ import { combineReducers } from 'redux';
 
 // Import each reducer here.
 // First: import the StudentReducer
-import StudentReducer from './StudentReducer';
+// import StudentReducer from './StudentReducer';
+
+// import the register reducer which contains {ms}
+import RegisterReducer from './RegisterReducer';
 
 // create a rootReducer using the combineReducer method, so we can export it to the Store in index.js
 const rootReducer = combineReducers({
 	// Inside here, we pass each reducer as a key/value
 	// Each key will be available as a piece of state later
-	students: StudentReducer
+	registerReducer: RegisterReducer
 })
 
 export default rootReducer;
