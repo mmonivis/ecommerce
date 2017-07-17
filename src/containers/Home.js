@@ -16,8 +16,8 @@ class Home extends Component{
 	      // console.log(productlinesData);
 	      this.setState({
 	        productlines: productlinesData
-	      })
-	    })
+	      });
+	    });
 	}
 
 	render(){

@@ -194,22 +194,30 @@
   font-size: 22px;
 }
 
-/* line 6, ../../compass/sass/styles.scss */
+/* line 1, ../../compass/sass/_products.scss */
+.table-head {
+  color: #0000ff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* line 7, ../../compass/sass/styles.scss */
 .slick-image img {
   width: 100vw;
 }
 
-/* line 10, ../../compass/sass/styles.scss */
+/* line 11, ../../compass/sass/styles.scss */
 .main {
-  margin-top: 20px;
+  margin-top: 70px;
 }
 
-/* line 14, ../../compass/sass/styles.scss */
+/* line 15, ../../compass/sass/styles.scss */
 .home-header {
   text-align: center;
 }
 
-/* line 18, ../../compass/sass/styles.scss */
+/* line 19, ../../compass/sass/styles.scss */
 .register-wrapper {
   margin-top: 100px;
 }

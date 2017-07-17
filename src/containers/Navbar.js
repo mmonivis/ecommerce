@@ -14,11 +14,11 @@ class NavBar extends Component{
   componentDidMount() {
     // go get all productlines from the DB.
     $.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
-      console.log(productlinesData);
+      // console.log(productlinesData);
       this.setState({
         productlines: productlinesData
-      })
-    })
+      });
+    });
   }
 
   render(){
@@ -48,6 +48,9 @@ class NavBar extends Component{
     return(
       <div>
       <nav className="navbar navbar-default navbar-fixed-top">
+        <div className="navbar-header">
+          <Link to="/" className="navbar-brand">ClassicModels</Link>
+        </div>
         <div className="container-fluid navbar-white" >
           <ul className="nav navbar-nav">
             <li><Link to="/">Home</Link></li>
@@ -63,12 +66,7 @@ class NavBar extends Component{
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact Us</Link></li>
           </ul>
-        </div>
-        <div className="container">
-          <div className="navbar-header">
-            <Link to="/" className="navbar-brand">ClassicModels</Link>
-          </div>
-           <ul className="nav navbar-nav float-right">
+          <ul className="nav navbar-nav float-right">
               {rightBar}
            </ul>
         </div>
