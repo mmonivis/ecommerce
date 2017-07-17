@@ -33,8 +33,20 @@ router.get('/productlines/get', (req,res)=>{
 		}else{
 			res.json(results);
 		}
-	})
-})
+	});
+});
+
+router.get('/productlines/:productLines/get', (req,res)=>{
+	// res.json({msg:"Test"})
+	const pl = req.params.productLines;
+	var plQuery = `SELECT * FROM productLines
+	INNER JOIN products ON productlines.productLine = products.productLine
+	WHERE link = ?`
+	connection.query(plQuery, [pl], (error, results)=>{
+		if (error) throw error;
+		res.json(results);
+	});
+});
 
 router.post('/register', (req, res)=>{
 	console.log(req.body)

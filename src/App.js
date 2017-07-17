@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Slick from './components/Slick'
 
 import Students from './Students';
 import Home from './containers/Home';
@@ -14,6 +15,7 @@ class App extends Component {
       <Router>
       	<div className="App">
       		<Navbar />
+          <Route exact path="/" component={Slick} />
       		<div className="container main">
       			<Route exact path="/" component={Home} />
       			<Route exact path="/register" component={Register} />
