@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, Button, Col } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, Button, Col ,MenuItem} from 'react-bootstrap'
 // Our action needs bindActionCreators from redux
-import {bindActionCreators} from 'redux';
+import  {bindActionCreators} from 'redux';
 // Get the registerAction function which runs on submission
 import RegisterAction from '../actions/RegisterAction';
-// Because this is a container, we need connect from react-redux
-import { connect } from 'react-redux';
+// Because this is a container, we need connect from react-redux!
+import {connect} from 'react-redux';
+
 
 class Register extends Component{
 	constructor(props) {
@@ -80,16 +81,15 @@ class Register extends Component{
 		}		
 	}
 
-
 	render(){
 
-		console.log("======================")
-		console.log(this.props.registerResponse)
-		console.log("======================")
+		// this.setState({
+		// 	bad: ""
+		// })
 
 		return(
 			<div className="register-wrapper">
-				<h1>{this.state.registerMessage}</h1>
+				<h1 className="text-danger">{this.state.registerMessage}</h1>
 				<Form horizontal onSubmit={this.handleRegistration}>
 					<FormGroup controlId="formHorizontalName" validationState={this.state.nameError}>
 						<Col componentClass={ControlLabel} sm={2}>
@@ -172,4 +172,5 @@ function mapDispatchToProps(dispatch){
 	}, dispatch)
 }
 
+// export default Register;
 export default connect(mapStateToProps,mapDispatchToProps)(Register);

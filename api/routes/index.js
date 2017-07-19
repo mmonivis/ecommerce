@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-// Include config file. Up from routes, down into config, config.js
+// Include config file. Go up from routes, down into config, config.js
 var config = require('../config/config');
 
-// include bcrypt for hashing and checking password
+// include bcrpyt for hasing and checking password
 var bcrypt = require('bcrypt-nodejs');
 // include rand-token for generating user token
-var randToken = require('rand-token');
+var randToken = require('rand-token')
 
 // set up the connection with options
 var connection = mysql.createConnection({
@@ -16,36 +16,83 @@ var connection = mysql.createConnection({
 	password: config.password,
 	database: config.database
 });
+// Actually make the connection
+connection.connect();
 
-// actually make the connection
-connection.connect()
+// router.get('/:something/:something2',(req,res, next)=>{
+// 	req.cookies.url = req.body.param.something
+// 	next()
+// })
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/productlines/get', (req,res)=>{
+router.get('/productlines/get', (req, res)=>{
 	const selectQuery = "SELECT * FROM productlines"
-	connection.query(selectQuery,(error,results,fields)=>{
+	connection.query(selectQuery,(error, results, fields)=>{
 		if(error){
-			res.json(error);
+			res.json(error)
 		}else{
 			res.json(results);
 		}
 	});
 });
 
-router.get('/productlines/:productLines/get', (req,res)=>{
-	// res.json({msg:"Test"})
+router.get('/productlines/:productLines/get', (req, res)=>{
+	// res.json({msg:"test"})
 	const pl = req.params.productLines;
-	var plQuery = `SELECT * FROM productLines
-	INNER JOIN products ON productlines.productLine = products.productLine
-	WHERE link = ?`
+	var plQuery = `SELECT * from productlines
+		INNER JOIN products ON productlines.productLine = products.productLine
+		WHERE link = ?`
 	connection.query(plQuery, [pl], (error, results)=>{
 		if (error) throw error;
 		res.json(results);
+	})
+});
+
+router.post('/getCart',(req, res)=>{
+	const getUidQuery = `SELECT id from users WHERE token = ?`
+	connection.query(getUidQuery,[req.body.token],(error,results)=>{
+		const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+			INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?`
+		connection.query(getCartTotals,[results[0].id],(error3,results3)=>{
+			if(error3){
+				res.json(error3)
+			}else{
+				const getCartContents = `SELECT * FROM cart
+				INNER JOIN products on products.productCode = cart.productCode 
+				WHERE uid = ?`
+				connection.query(getCartContents,[results[0].id],(error4,results4)=>{
+					var finalCart = results3[0];
+					finalCart.products = results4
+					res.json(finalCart);
+				})
+			}
+		})
+	})
+})
+
+router.post('/updateCart', (req, res)=>{
+	console.log(req.body)
+	const getUidQuery = `SELECT id from users WHERE token = ?`
+	connection.query(getUidQuery,[req.body.token],(error,results)=>{
+		if(error) throw error;
+		if(results.length == 0 ){
+			res.json({msg:"badToken"})
+		}else{
+			const addToCartQuery = `INSERT INTO cart (uid,productCode) 
+				VALUES (?,?)`;
+			connection.query(addToCartQuery,[results[0].id,req.body.productCode],(error2,results2)=>{
+				const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+					INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?`
+				connection.query(getCartTotals,[results[0].id],(error3,results3)=>{
+					if(error3){
+						res.json(error3)
+					}else{
+						res.json(results3[0]);
+					}
+				})
+			})
+		}
 	});
+
 });
 
 router.post('/register', (req, res)=>{
@@ -65,7 +112,7 @@ router.post('/register', (req, res)=>{
 	// Therefore, we need to insert the user into Customers first...
 	// get the ID created by that insert, THEN insert the user into Users.
 
-	// First, check to see if email already exists
+// First, check to see if email already exists
 	const checkEmail = new Promise((resolve, reject) => {
 		const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
 		connection.query(checkEmailQuery,[email],(error,results)=>{
@@ -115,40 +162,44 @@ router.post('/register', (req, res)=>{
 			res.json(error)
 		}
 	)
-})
 
-router.post('/login',(req,res)=>{
+})	
+
+router.post('/login', (req, res)=>{
 	var email = req.body.email;
 	var password = req.body.password;
-	var checkLoginQuery = "SELECT * FROM users WHERE email = ?";
-	connection.query(checkLoginQuery,[email], (error,results)=>{
+	var checkLoginQuery = `SELECT * FROM users 
+		INNER JOIN customers ON users.uid = customers.customerNumber
+		WHERE email = ?`;
+	connection.query(checkLoginQuery, [email], (error,results)=>{
 		if(error) throw error;
-
-		if(results.length == 0){
-			// this email aint in the db
+		if(results.length === 0){
+			// This email aint in the database
 			res.json({
-				msg: "badUsername"
+				msg: 'badUserName'
 			});
 		}else{
-			// The username is valid, see if the password is
+			// The username is valid. See if the password is...
 			var checkHash = bcrypt.compareSync(password, results[0].password);
-			// checkHash will be true or false
+			// checkHash will be true or false.
 			if(checkHash){
-				// This is the droid we're looking for
-				// Log them in... i.e., create token, update it, send it back
-				const updateToken = `Update users SET token=?,token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)`
+				// this is teh droid we're looking for
+				// Log them in... i.e, create a token, update it, send it back
+				const updateToken = `Update users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)
+					WHERE email=?`
 				var token = randToken.uid(40);
-				connection.query(updateToken,[token],(error2,results2)=>{
+				connection.query(updateToken,[token,email],(error2,results2)=>{
+					console.log(results)
 					res.json({
-						msg: "loginSuccess",
-						name: results[0].name,
+						msg: 'loginSuccess',
+						name: results[0].customerName,
 						token: token
 					})
 				})
 			}else{
-				// There aren't the droids we're looking for.
+				// These arent the droids were looking for.
 				// You don't want to sell me death sticks.
-				// You want to go hopme and rethink your life. Bye.
+				// You want to go home and rethink your life. Goodbye
 				res.json({
 					msg: 'wrongPassword'
 				})

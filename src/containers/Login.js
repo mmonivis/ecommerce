@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, Button, Col } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, Button, Col ,MenuItem} from 'react-bootstrap'
 // Our action needs bindActionCreators from redux
-import {bindActionCreators} from 'redux';
+import  {bindActionCreators} from 'redux';
 // Get the registerAction function which runs on submission
-import RegisterAction from '../actions/RegisterAction';
-// Because this is a container, we need connect from react-redux
-import { connect } from 'react-redux';
+import LoginAction from '../actions/LoginAction';
+import GetCart from  '../actions/GetCart'
+// Because this is a container, we need connect from react-redux!
+import {connect} from 'react-redux';
+
+
 
 class Login extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
 			registerMessage: "",
-			nameError: null,
+			passwordError: null,
 			emailError: null,
 			formError: false
 		}
@@ -27,8 +30,8 @@ class Login extends Component{
 		var error = false;
 
 		//Password
-		if(password.length < 3){
-			var passwordError = "error"; 
+		if(password.length == 0){
+			var passwordError = "error";
 			error=true;
 		}
 		else{ 
@@ -60,7 +63,8 @@ class Login extends Component{
 		console.log(nextProps.registerResponse)
 		console.log("=======================")
 
-		if(nextProps.registerResponse.msg == 'userInserted'){
+		if(nextProps.registerResponse.msg == 'loginSuccess'){
+			this.props.getCart(nextProps.registerResponse.token)
 			this.props.history.push('/');
 		}else if(nextProps.registerResponse.msg == 'userAlreadyExists'){
 			console.log("User name taken!")
@@ -70,17 +74,16 @@ class Login extends Component{
 		}		
 	}
 
-
 	render(){
 
-		console.log("======================")
-		console.log(this.props.registerResponse)
-		console.log("======================")
+		// this.setState({
+		// 	bad: ""
+		// })
 
 		return(
 			<div className="register-wrapper">
-				<h1>{this.state.registerMessage}</h1>
-				<Form horizontal onSubmit={this.handleRegistration}>
+				<h1 className="text-danger">{this.state.registerMessage}</h1>
+				<Form horizontal onSubmit={this.handleLogin}>
 					<FormGroup controlId="formHorizontalName" validationState={this.state.nameError}>
 						<Col componentClass={ControlLabel} sm={2}>
 							Email
@@ -99,7 +102,7 @@ class Login extends Component{
 					</FormGroup>
 					<FormGroup>
 						<Col smOffset={2} sm={10}>
-							<Button bsStyle="primary" bsSize="small" type="submit">
+							<Button bsStyle="success" bsSize="small" type="submit">
 								Login
 							</Button>
 						</Col>
@@ -118,8 +121,10 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		registerAction: RegisterAction
+		loginAction: LoginAction,
+		getCart: GetCart
 	}, dispatch)
 }
 
+// export default Register;
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

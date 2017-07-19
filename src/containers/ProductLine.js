@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 import ProductTableRow from '../components/ProductTableRow';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import UpdateCart from '../actions/UpdateCart';
 
 class ProductLine extends Component{
 	constructor(props) {
@@ -58,9 +61,30 @@ class ProductLine extends Component{
 	}
 
 	render(){
+		// console.log(this.props.loginInfo)
+		// Check to see if msg = loginSuccess.
+		// If so, they are logged in, let the ProductTableRow know
+		// If not, send appropriate props
+		if(this.props.loginInfo.token != undefined){
+			// these are the droids we're looking for
+			var loggedIn = true;
+			var token = this.props.loginInfo.token
+		}else{
+			var loggedIn = false;
+			var token = null
+		}
+
 		var productTableArray = [];
 		this.state.productList.map((product, index)=>{
-			productTableArray.push(<ProductTableRow key={index} product={product} />)
+			productTableArray.push(
+				<ProductTableRow 
+					key={index} 
+					product={product} 
+					addToCart={this.props.updateCart} 
+					loggedIn={loggedIn}
+					token={token}
+				/>
+			)
 		})
 
 		if(this.state.productList.length == 0){
@@ -71,7 +95,7 @@ class ProductLine extends Component{
 
 		return(
 			<div className="product-list">
-				<h1>{textHeader}</h1>
+				<div className="pl-header"><h1>{textHeader}</h1></div>
 				<table className="table table-striped">
 					<thead>
 						<tr>
@@ -94,4 +118,17 @@ class ProductLine extends Component{
 	}
 }
 
-export default ProductLine;
+function mapStateToProps(state){
+	return{
+		loginInfo: state.registerReducer
+	}
+}
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		updateCart: UpdateCart
+	}, dispatch)
+}
+
+// export default ProductLine;
+export default connect(mapStateToProps,mapDispatchToProps)(ProductLine);

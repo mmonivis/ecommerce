@@ -7,7 +7,7 @@ export default function(loginData){
 		data: loginData
 	});
 	return{
-		type: " REGISTER",
+		type: "REGISTER",
 		payload: thePromise
 	}
 }

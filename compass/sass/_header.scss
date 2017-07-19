@@ -2,6 +2,10 @@
   float: right;
 }
 
+.nav.navbar-nav.float-right .text-right a{
+    display: inline;
+}
+
 .navbar-header a{
   text-align: center;
   margin-right: 10px;

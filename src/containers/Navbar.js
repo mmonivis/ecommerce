@@ -22,11 +22,23 @@ class NavBar extends Component{
   }
 
   render(){
+    console.log(this.props.cartInfo)
+    if(this.props.cartInfo.totalPrice != undefined){
+      var totalPrice = this.props.cartInfo.totalPrice;
+      var totalItems = this.props.cartInfo.totalItems;
+    }else{
+      var totalPrice = 0.00;
+      var totalItems = 0;
+    }
+
+  console.log(totalPrice)
+  console.log(totalItems)
+
     // Temp var to store our <link>
     const shopMenu = [];
     // Map through this.state.productlines. First render, will not loop (because array is empty)
     this.state.productlines.map((pl,index)=>{
-      console.log(pl)
+      // console.log(pl)
       shopMenu.push(
         <Link key={index} to={`/shop/${pl.link}`}>{pl.productLine}</Link>
       )
@@ -41,7 +53,8 @@ class NavBar extends Component{
   }else{
     var rightBar = [
       <li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
-      <li key="2" className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>    
+      <li key="2" className="text-right"><Link to="/cart">({totalItems}) items in your cart | (${totalPrice})</Link></li>,  
+      <li key="3" className="text-right"><Link to="/logout">Logout</Link></li>  
     ]   
   }
 
@@ -78,7 +91,8 @@ class NavBar extends Component{
 
 function mapStateToProps(state){
   return{
-    registerInfo: state.registerReducer
+    registerInfo: state.registerReducer,
+    cartInfo: state.cartReducer
   }
 }
 
