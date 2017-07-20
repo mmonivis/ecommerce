@@ -79,7 +79,7 @@ class NavBar extends Component{
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact Us</Link></li>
           </ul>
-          <ul className="nav navbar-nav float-right">
+          <ul className="nav navbar-nav float-right login-register">
               {rightBar}
            </ul>
         </div>

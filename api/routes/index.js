@@ -9,6 +9,8 @@ var bcrypt = require('bcrypt-nodejs');
 // include rand-token for generating user token
 var randToken = require('rand-token')
 
+var stripe = require('stripe')(config.stripeKey);
+
 // set up the connection with options
 var connection = mysql.createConnection({
 	host: config.host,
@@ -206,6 +208,34 @@ router.post('/login', (req, res)=>{
 			}
 		}
 	})
+})
+
+router.post('/stripe', (req, res)=>{
+    var userToken = req.body.token;
+    var stripeToken = req.body.stripeToken;
+    var amount = req.body.amount;
+    // strip module which is associated with our secret key has a create method,
+    // which takes an object of options to charge
+    stripe.charges.create({
+        amount: amount,
+        currency: 'usd',
+        source: stripeToken,
+        description: "Charges for Classic Models"
+    }, (error, charge)=>{
+        if (error){
+            res.json({
+                msg: error
+            })
+        }else{
+            // Insert stuff from cart that was just paid into:
+            // -orders
+            // -order details
+            // Then remove it from cart
+            res.json({
+                msg: 'paymentSuccess'
+            })
+        }
+    })
 })
 
 module.exports = router;

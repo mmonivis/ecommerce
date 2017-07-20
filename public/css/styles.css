@@ -9,27 +9,32 @@
 }
 
 /* line 9, ../../compass/sass/_header.scss */
+.login-register {
+  margin-top: 1em;
+}
+
+/* line 13, ../../compass/sass/_header.scss */
 .navbar-header a {
   text-align: center;
   margin-right: 10px;
 }
 
-/* line 14, ../../compass/sass/_header.scss */
+/* line 18, ../../compass/sass/_header.scss */
 .dropdown {
   position: relative;
 }
 
-/* line 18, ../../compass/sass/_header.scss */
+/* line 22, ../../compass/sass/_header.scss */
 .dropdown .dropdown-links {
   display: none;
 }
 
-/* line 22, ../../compass/sass/_header.scss */
+/* line 26, ../../compass/sass/_header.scss */
 .dropdown:hover .dropdown-links {
   display: block;
 }
 
-/* line 26, ../../compass/sass/_header.scss */
+/* line 30, ../../compass/sass/_header.scss */
 .dropdown-links a {
   display: block;
   position: absolute;
@@ -41,138 +46,138 @@
   color: #777;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(0) {
   top: 20px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(1) {
   top: 40px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(2) {
   top: 60px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(3) {
   top: 80px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(4) {
   top: 100px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(5) {
   top: 120px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(6) {
   top: 140px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(7) {
   top: 160px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(8) {
   top: 180px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(9) {
   top: 200px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(10) {
   top: 220px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(11) {
   top: 240px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(12) {
   top: 260px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(13) {
   top: 280px;
 }
 
-/* line 39, ../../compass/sass/_header.scss */
+/* line 43, ../../compass/sass/_header.scss */
 .dropdown-links a:nth-child(14) {
   top: 300px;
 }
 
-/* line 72, ../../compass/sass/_header.scss */
+/* line 76, ../../compass/sass/_header.scss */
 .dropdown-links a:hover {
   color: black;
 }
 
 @media only screen and (max-width: 960px) {
-  /* line 77, ../../compass/sass/_header.scss */
+  /* line 81, ../../compass/sass/_header.scss */
   .navbar-header {
     float: none;
   }
 
-  /* line 80, ../../compass/sass/_header.scss */
+  /* line 84, ../../compass/sass/_header.scss */
   .navbar-toggle {
     display: block;
   }
 
-  /* line 84, ../../compass/sass/_header.scss */
+  /* line 88, ../../compass/sass/_header.scss */
   .navbar-collapse {
     border-top: 1px solid transparent;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  /* line 88, ../../compass/sass/_header.scss */
+  /* line 92, ../../compass/sass/_header.scss */
   .navbar-collapse.collapse {
     display: none !important;
   }
 
-  /* line 91, ../../compass/sass/_header.scss */
+  /* line 95, ../../compass/sass/_header.scss */
   .navbar-nav {
     float: none !important;
     margin: 7.5px -15px;
   }
 
-  /* line 95, ../../compass/sass/_header.scss */
+  /* line 99, ../../compass/sass/_header.scss */
   .navbar-nav > li {
     float: none;
   }
 
-  /* line 98, ../../compass/sass/_header.scss */
+  /* line 102, ../../compass/sass/_header.scss */
   .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
-  /* line 102, ../../compass/sass/_header.scss */
+  /* line 106, ../../compass/sass/_header.scss */
   .navbar-text {
     float: none;
     margin: 15px 0;
   }
 
   /* since 3.1.0 */
-  /* line 107, ../../compass/sass/_header.scss */
+  /* line 111, ../../compass/sass/_header.scss */
   .navbar-collapse.collapse.in {
     display: block !important;
   }
 
-  /* line 110, ../../compass/sass/_header.scss */
+  /* line 114, ../../compass/sass/_header.scss */
   .collapsing {
     overflow: hidden !important;
   }
@@ -199,6 +204,36 @@
   font-size: 22px;
 }
 
+/* line 23, ../../compass/sass/_home.scss */
+.shop-links {
+  height: 100%;
+}
+/* line 25, ../../compass/sass/_home.scss */
+.shop-links h2 {
+  background-color: #f8f8f8;
+}
+/* line 28, ../../compass/sass/_home.scss */
+.shop-links li {
+  display: inline-block;
+}
+/* line 31, ../../compass/sass/_home.scss */
+.shop-links li a {
+  display: inline-block;
+  position: absolute;
+  left: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #999;
+  width: 150px;
+  text-align: left;
+  color: #777;
+}
+
+@media screen only and (max-width: 960px) {
+  /* line 44, ../../compass/sass/_home.scss */
+  .shop-links {
+    display: hidden;
+  }
+}
 /* line 1, ../../compass/sass/_products.scss */
 .table-head {
   color: #0000ff;
@@ -212,22 +247,35 @@
   text-align: center;
 }
 
-/* line 7, ../../compass/sass/styles.scss */
+/* line 1, ../../compass/sass/_cart.scss */
+.cart-head {
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 50px;
+}
+
+/* line 7, ../../compass/sass/_cart.scss */
+.pay-now {
+  text-align: right;
+  height: 70px;
+}
+
+/* line 8, ../../compass/sass/styles.scss */
 .slick-image img {
   width: 100vw;
 }
 
-/* line 11, ../../compass/sass/styles.scss */
+/* line 12, ../../compass/sass/styles.scss */
 .main {
   margin-top: 70px;
 }
 
-/* line 15, ../../compass/sass/styles.scss */
+/* line 16, ../../compass/sass/styles.scss */
 .home-header {
   text-align: center;
 }
 
-/* line 19, ../../compass/sass/styles.scss */
+/* line 20, ../../compass/sass/styles.scss */
 .register-wrapper {
   margin-top: 100px;
 }

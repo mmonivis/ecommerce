@@ -19,3 +19,29 @@
 		font-size: 22px;
 	}
 }
+
+.shop-links{
+	height: 100%;
+	h2{
+		background-color: #f8f8f8;
+	}
+	li{
+		display: inline-block;	
+	}
+	li a{
+		display: inline-block;
+		position: absolute;
+		left: 20px;
+		background-color: #f8f8f8;
+		border: 1px solid #999;
+		width: 150px;
+		text-align: left;
+		color: #777;
+	}
+}
+
+@media screen only and (max-width: 960px){
+	.shop-links{
+		display: hidden;
+	}
+}
