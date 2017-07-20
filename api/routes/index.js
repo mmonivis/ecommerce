@@ -244,14 +244,47 @@ router.post('/stripe', (req, res)=>{
             			// results2 (the select query above) contians an array of rows.
             			// Each row has the uid, the productCode, and the price 
             			// map through this array and add each one to the orderDetails table
+
+            			// Set up an array to start our promises inside of
+            			// After all our promises have been created, we will run .all on this thing
+            			var orderDetailPromises = [];
+            			// Loop through all the rows in results2, which is...
+            			// a row for every element in the user's cart.
+            			// Each row contains: uid, productCode, buyPrice
+            			// Call the one we're on "cartRow"
             			results2.map((cartRow)=>{
+            				// Set up an insert query to add THIS product to the orderdetails
             				var insertOrderDetail = `INSERT INTO orderdetails
             					(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber)
             					VALUES
             					(?,?,1,?,1)`
-            					connection.query(insertOrderDetail,[newOrderNumber,cartRow.productCode,cartRow.buyPrice],(error4,results4)=>{
-            						
+            				// Wrap a promise around our query (because queries are async)
+            				// We will call resolve if it succeeds, call reject if it fails
+            				// Then, push the promise onto the array above
+            				// So that when all of them are finished, we know it's safe to move on
+            				const aPromise = new Promise((resolve, reject)=>{
+	        					connection.query(insertOrderDetail,[newOrderNumber,cartRow.productCode,cartRow.buyPrice],(error4,results4)=>{
+	        						// another row finished.
+	        						if (error4){
+	        							reject(error4)
+	        						}else{
+	        							resolve(results4)
+	        						}
+	        					})
+            				})
+            				orderDetailPromises.push(aPromise);
+            			});
+            			// When all the promises orderDetailPromises have called resolve
+            			// the .all function will run. It has a .then that we can use
+            			Promise.all(orderDetailPromises).then((finalValues)=>{
+            				console.log("All promises finished")
+            				console.log(finalValues)
+            				const deleteQuery = `DELETE * FROM cart WHERE uid = ${results2[0].id}`
+            				connection.query(deleteQuery, (error5,results5)=>{
+            					res.json({
+            						msg: 'paymentSuccess'
             					})
+            				})
             			})
             		});
             });
