@@ -54,7 +54,7 @@ class NavBar extends Component{
     var rightBar = [
       <li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
       <li key="2" className="text-right"><Link to="/cart">({totalItems}) items in your cart | (${totalPrice})</Link></li>,  
-      <li key="3" className="text-right"><Link to="/logout">Logout</Link></li>  
+      <li key="3" className="text-right"><a href="http://localhost:3001/">Logout</a></li>  
     ]   
   }
 
